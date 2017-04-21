@@ -41,6 +41,8 @@ public class Main {
 			
 			//all FastaRecord attributes found			
 			if(line.startsWith(">") && foundNext){
+				// remove unwanted characters
+				sequence = sequence.replace(" ", "").replace("/t ", "").replace("/n", "");
 				fastas.add(new FastaRecord(name, sequence));
 				foundNext = false;
 				}
@@ -80,6 +82,8 @@ public class Main {
 			
 			//all FastaRecord attributes found			
 			if(line.startsWith(">") && foundNext){
+				// remove unwanted characters
+				sequence = sequence.replace(" ", "").replace("/t ", "").replace("/n", "");
 				fastas[counter] = new FastaRecord(name, sequence);
 				counter++;
 				foundNext = false;

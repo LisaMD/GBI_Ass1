@@ -33,10 +33,10 @@ public class Main {
 	// generate fasta file from given FastaRecordArray
 	public static void writeFasta(FastaRecord[] Seques, String filename){
 		try{
-			File file = new File(filename);
-		    file.createNewFile();
+//			File file = new File(filename);
+//		    file.createNewFile();
 
-			BufferedWriter out = new BufferedWriter(new FileWriter(file));
+			BufferedWriter out = new BufferedWriter(new FileWriter(filename));
 			
 			for (int i = 0; i < Seques.length; i++) {
 				out.write(">"+ Seques[i].getIdentifier()); 
@@ -161,23 +161,24 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
-		FastaRecord test = new FastaRecord("test", "ATCT");
-//		System.out.println(test);
-//		System.out.println(test.toReverseComplement());
+
+		// input
+		String PATH = args[0];
 		
-		if (args[2] == "single"){
-			// read single file and write it as reverse complement
-			FastaRecord[] singlefasta = parseFasta(args[0]);
-			singlefasta[0].setSequence(singlefasta[0].toReverseComplement());
-			writeFasta(singlefasta, args[1]);
-		} else if (args[2] == "multiple"){
-			// read multiple file and write it as fasta in reverse Order
-			FastaRecord[] fastas = parseFasta(args[0]);
-			FastaRecord[] fastas_switched = reverseOrder(fastas);
-			writeFasta(fastas_switched, args[1]);
-		}
+		// read single file and write it as reverse complement
+		FastaRecord[] singlefasta = parseFasta(PATH + "Data1-single.fasta");
+		singlefasta[0].setSequence(singlefasta[0].toReverseComplement());
+		writeFasta(singlefasta, PATH + "Data1-single-RC.fasta");
 		
-	
+		// read multiple file and write it as fasta in reverse Order
+		FastaRecord[] fastas = parseFasta(PATH + "Data2-multiple.fasta");
+		FastaRecord[] fastas_switched = reverseOrder(fastas);
+		writeFasta(fastas_switched, PATH + "Data2-multiple_reversed.fasta");
+		
+		// check if switch successfull
+		printArray(fastas);
+		printArray(fastas_switched);
+		
 		System.out.println("Done");
 	}
 
